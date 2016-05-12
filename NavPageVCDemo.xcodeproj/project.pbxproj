@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A7B6648DC198B0535C4CE79 /* Pods_NavPageVCDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9316913DF760413739C78323 /* Pods_NavPageVCDemo.framework */; };
+		942DBF1A1CE3274F00260026 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942DBF191CE3274F00260026 /* HomeViewController.swift */; };
 		94B937181CE07D660013E424 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B937171CE07D660013E424 /* AppDelegate.swift */; };
 		94B9371A1CE07D660013E424 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B937191CE07D660013E424 /* ViewController.swift */; };
 		94B9371D1CE07D660013E424 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94B9371B1CE07D660013E424 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		3CE603E5F0E8493C356E2F88 /* Pods-NavPageVCDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavPageVCDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NavPageVCDemo/Pods-NavPageVCDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		9316913DF760413739C78323 /* Pods_NavPageVCDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NavPageVCDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		942DBF191CE3274F00260026 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		94B937141CE07D660013E424 /* NavPageVCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavPageVCDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B937171CE07D660013E424 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B937191CE07D660013E424 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				94B937171CE07D660013E424 /* AppDelegate.swift */,
+				942DBF191CE3274F00260026 /* HomeViewController.swift */,
 				94B937291CE07D900013E424 /* PageVC.swift */,
 				94B937191CE07D660013E424 /* ViewController.swift */,
 				94B9371B1CE07D660013E424 /* Main.storyboard */,
@@ -216,6 +219,7 @@
 				94B9371A1CE07D660013E424 /* ViewController.swift in Sources */,
 				94B9372A1CE07D900013E424 /* PageVC.swift in Sources */,
 				94B937181CE07D660013E424 /* AppDelegate.swift in Sources */,
+				942DBF1A1CE3274F00260026 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
