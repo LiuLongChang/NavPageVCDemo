@@ -210,10 +210,20 @@ class PageVC: BaseVC,UIScrollViewDelegate {
         let halfWidth = CGRectGetWidth( (segmentScrollView?.bounds == nil ? CGRectZero : (segmentScrollView?.bounds)!) ) / 2
         
         if midX < halfWidth {
+            
+            
+            
             offset = 0
+            
         }else if(midX > contentWidth! - halfWidth){
+            
+            
             offset = contentWidth! - 2 * halfWidth
+            
         }else{
+            
+            
+            
             offset = midX - halfWidth
         }
         
