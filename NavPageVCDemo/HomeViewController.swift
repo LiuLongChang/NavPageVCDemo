@@ -21,9 +21,10 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
         
         self.navigationItem.title = "News"
         self.view.backgroundColor = UIColor.whiteColor()
+        
+        
+        
         self.modeArr = ["首页阿","音频视频阿","纵览","德玛西亚皇子","报纸书本","游戏","邮箱"]
-        
-        
         for idx in 0...modeArr.count-1 {
             
             let vc = UIViewController()
@@ -49,9 +50,6 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
         
         
         
-        
-        
-        
         self.delegate = self
         self.dataSource = self
         
@@ -65,9 +63,49 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
         
         self.reloadData()
         
+        
+        
+        
+        let rightNavBtn = UIButton(type:.Custom)
+        rightNavBtn.frame = CGRectMake(0, 0, 30, 30)
+        rightNavBtn.backgroundColor = UIColor.blackColor()
+        rightNavBtn.addTarget(self, action: #selector(HomeViewController.rightBtnAction(_:)), forControlEvents: .TouchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightNavBtn)
+        
+        
+        
         // Do any additional setup after loading the view.
     }
 
+    
+    
+    func rightBtnAction(btn:UIButton){
+        
+        self.modeArr = ["北京一页","堂会酒吧","故宫深思","Times","纽约","游戏","东京","时代经济","无界浏览"]
+        vcArr.removeAllObjects()
+        
+        
+        for idx in 0...modeArr.count-1 {
+            
+            let vc = UIViewController()
+            vc.view.backgroundColor = UIColor.init(red: CGFloat(arc4random()%255)/255.0, green: CGFloat(arc4random()%255)/255.0, blue: CGFloat(arc4random()%255)/255.0, alpha: 1.0)
+            
+            
+            let viewbg = UILabel()
+            vc.view.addSubview(viewbg)
+            viewbg.text = "==== \(idx)"
+            viewbg.snp_makeConstraints(closure: { (make) in
+                make.centerX.equalTo(vc.view.snp_centerX)
+                make.centerY.equalTo(vc.view.snp_centerY)
+                make.width.height.equalTo(80)
+            })
+            viewbg.textColor = UIColor.blueColor()
+            viewbg.backgroundColor = UIColor.blackColor()
+            
+            vcArr.addObject(vc)
+        }
+        self.reloadData()
+    }
     
     
     
@@ -87,9 +125,6 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
         
     }
     
-    
-    
-    
     //不一定需要实现以下方法
     
     func pageVC(pageVC:PageVC?,willChangeToIndex toIndex:NSInteger?,fromIndex:NSInteger?){
@@ -97,8 +132,6 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
         
         
     }
-    
-    
     
     //已经改变到index
     func pageVC(pageVC:PageVC?,didChangeToIndex toIndex:NSInteger?,fromIndex:NSInteger?){
@@ -119,8 +152,6 @@ class HomeViewController: PageVC,PageVCDataSource,PageVCDelegate {
           })
           alert.addAction(action)
           self.presentViewController(alert, animated: true, completion: nil)
-        
-        
     }
     
     

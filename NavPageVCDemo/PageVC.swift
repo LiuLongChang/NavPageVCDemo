@@ -24,18 +24,13 @@ let PageVCSegmentIndicatorHeightLine : CGFloat = 3.0
 let PageVCMaxVisiblePages = 6
 
 
-
-
-
 enum PageVCEditMode : Int{
     case Default = 0
     case Editing
     
-    
     func typeName() -> String {
         return "UIViewAnimationCurve"
     }
-    
     
     func toBool()->Bool{
         if self == .Default {
@@ -44,13 +39,10 @@ enum PageVCEditMode : Int{
             return false
         }
     }
-    
-    
 }
 
 
 extension PageVCEditMode{
-    
     func description() -> String {
         
         switch self {
@@ -61,12 +53,7 @@ extension PageVCEditMode{
         }
         
     }
-    
 }
-
-
-
-
 
 enum PageVCSegmentStyle : Int {
     case Default
@@ -76,10 +63,7 @@ enum PageVCSegmentStyle : Int {
     }
 }
 
-
-
 extension PageVCSegmentStyle{
-    
     func description() -> String {
         switch self {
         case .Default:
@@ -88,7 +72,6 @@ extension PageVCSegmentStyle{
             return "LineHighlight"
         }
     }
-    
 }
 
 
@@ -104,9 +87,7 @@ protocol PageVCDataSource {
 
 
 protocol PageVCDelegate {
-    
     //不一定需要实现以下方法
-    
     //将要改变到index
     func pageVC(pageVC:PageVC?,willChangeToIndex toIndex:NSInteger?,fromIndex:NSInteger?)
     //已经改变到index
@@ -115,17 +96,11 @@ protocol PageVCDelegate {
     func pageVC(pageVC:PageVC?,didClickAtIndex index:NSInteger?)
     //点击Edit按钮的mode
     func pageVC(pageVC:PageVC?,didClickEditMode mode:PageVCEditMode)
-    
 }
 
 
 
-
-
-
 class PageVC: BaseVC,UIScrollViewDelegate {
-    
-    
     
     var _segmentContainerView : UIView? //Container 容器 - 上面的SegmentCV
     var _contentContainerView : UIView!   //Contriner 容器 - 下面的滚动视图
@@ -135,29 +110,22 @@ class PageVC: BaseVC,UIScrollViewDelegate {
     var _editMode: Bool!
     
     
-    
     var numberOfContent : NSInteger?
     var lastIndex : NSInteger!
-    
-    
     
     var segmentTitles : NSMutableArray = []
     var reusableVCDic : NSMutableDictionary = [:]
     var size : CGSize!
     
     
-    
     var contentScrollView : UIScrollView!
     var segmentScrollView : UIScrollView!
-    
-    
     
     
     var segmentStyle :PageVCSegmentStyle!
     var normalTextColor : UIColor!
     var highightTextColor : UIColor!
     var lineBackground : UIColor!
-    
     
     
     var delegate : PageVCDelegate?
@@ -167,15 +135,10 @@ class PageVC: BaseVC,UIScrollViewDelegate {
     }
     
     
-    
     private var _currentIndex : NSInteger = 0
     var currentIndex : NSInteger {
         
-        
         set{
-            
-            
-            
             
             delegate?.pageVC(self, willChangeToIndex: newValue, fromIndex: currentIndex)
             let oldLabel = _segmentContainerView?.viewWithTag(1000 + currentIndex) as? UILabel
@@ -196,8 +159,6 @@ class PageVC: BaseVC,UIScrollViewDelegate {
                     frame = CGRectZero
                 }
                 
-                
-                
                 if self.segmentStyle == PageVCSegmentStyle.Default {
                     self.indicatorView?.frame = CGRectMake(CGRectGetMinX(frame!)+6, CGRectGetHeight(frame!)-PageVCSegmentIndicatorHeight, CGRectGetWidth(frame!)-12, PageVCSegmentIndicatorHeight - 8)
                 }
@@ -208,10 +169,7 @@ class PageVC: BaseVC,UIScrollViewDelegate {
                 
             }
             self.updateSegmentContentOffset()
-            
             delegate?.pageVC(self, didChangeToIndex: currentIndex, fromIndex: lastIndex)
-            
-            
         }
         
         get{
@@ -241,17 +199,13 @@ class PageVC: BaseVC,UIScrollViewDelegate {
             rect = CGRectZero
         }
         
-        
         let midX = CGRectGetMidX(rect!)
         
-       
         var offset : CGFloat = 0
         var contentWidth = segmentScrollView?.contentSize.width
         if contentWidth == nil {
             contentWidth = 0
         }
-        
-        
         
         let halfWidth = CGRectGetWidth( (segmentScrollView?.bounds == nil ? CGRectZero : (segmentScrollView?.bounds)!) ) / 2
         
@@ -265,9 +219,6 @@ class PageVC: BaseVC,UIScrollViewDelegate {
         
         segmentScrollView?.setContentOffset(CGPointMake(offset, 0), animated: true )
     }
-    
-    
-    
     
     
     
@@ -320,8 +271,6 @@ class PageVC: BaseVC,UIScrollViewDelegate {
             make.width.equalTo(segmentScrollView.snp_height)
             
         }
-        
-        
         
         //edit按钮左边的横线
         let lineView = UIView()
@@ -452,20 +401,18 @@ class PageVC: BaseVC,UIScrollViewDelegate {
             label.tag = 1000 + idx
             
             //改进适配字数
-            let size = (label.text as! NSString).sizeWithAttributes([NSFontAttributeName:UIFont.systemFontOfSize(16.0)])
+            
+            let sizeStr : NSString = NSString(string:label.text!)
+            let size = sizeStr.sizeWithAttributes([NSFontAttributeName:UIFont.systemFontOfSize(16.0)])
             self.size = size
             
             let tapGesture = UITapGestureRecognizer(target: self , action: #selector(PageVC.tapSegmentItemAction(_:)))
             label.addGestureRecognizer(tapGesture)
             
-            
-            
             if indicatorView == nil {
                 indicatorView = UIView()
             }
             _segmentContainerView!.insertSubview(label, aboveSubview: indicatorView!)
-            
-            
             
             label.snp_makeConstraints(closure: { (make) in
                 make.top.bottom.equalTo(_segmentContainerView!)
@@ -498,21 +445,18 @@ class PageVC: BaseVC,UIScrollViewDelegate {
             
             lastContentView = view
             
-            //if idx < 3  {
+            
+            let controller = dataSource?.pageVC(self, viewControllerAtIndex: idx)
+            
+            if controller != nil {
+                self.addChildViewController(controller!)
+                reusableVCDic.setObject(controller!, forKey: idx)
+                view.addSubview(controller!.view)
                 
-                let controller = dataSource?.pageVC(self, viewControllerAtIndex: idx)
-                
-                if controller != nil {
-                    self.addChildViewController(controller!)
-                    reusableVCDic.setObject(controller!, forKey: idx)
-                    view.addSubview(controller!.view)
-                    
-                    controller!.view.snp_makeConstraints(closure: { (make) in
-                        make.edges.equalTo(view)
-                    })
-                }
-                
-            //}
+                controller!.view.snp_makeConstraints(closure: { (make) in
+                    make.edges.equalTo(view)
+                })
+            }
             
         }
         
@@ -634,56 +578,16 @@ class PageVC: BaseVC,UIScrollViewDelegate {
     
     
     func transitionFromIndex(fromIndex:NSInteger,toIndex:NSInteger){
-        
         if fromIndex == toIndex {
             return
         }
-        
-        var removeIndex = 0
-        var addIndex = 0
-        
-        
-        if toIndex > fromIndex {
-            removeIndex = fromIndex - 1
-            addIndex = toIndex + 1
-        }else{
-            removeIndex = fromIndex + 1
-            addIndex = toIndex - 1
-        }
-        
-        
-        if addIndex >= 0 && addIndex < numberOfContent {
-            
-            if reusableVCDic[addIndex] != nil {
-                let toController = dataSource?.pageVC(self, viewControllerAtIndex: addIndex)
-                reusableVCDic.setObject(toController!, forKey: addIndex)
-                
-            }
-            
-        }
-        
-        
-        if reusableVCDic[toIndex] == nil {
-            let toController = dataSource?.pageVC(self, viewControllerAtIndex: toIndex)
-            reusableVCDic.setObject(toController!, forKey: toIndex)
-        }
-        
-        
-        if (removeIndex >= 0) && (removeIndex < numberOfContent) && (reusableVCDic.allKeys.count > PageVCMaxVisiblePages){
-
-        }
-        
-        
         self.currentIndex = toIndex
     }
-    
-    
     
     /*
     *   mark - Button Action
     *
     */
-    
     
     func editButtonAction(){
         _editMode = !_editMode
@@ -694,7 +598,6 @@ class PageVC: BaseVC,UIScrollViewDelegate {
             delegate!.pageVC(self, didClickEditMode: PageVCEditMode.Editing)
         }
     }
-    
     
 }
 
